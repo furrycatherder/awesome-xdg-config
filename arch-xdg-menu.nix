@@ -1,11 +1,13 @@
 { stdenv, lib, fetchurl, perl, perlPackages, makeWrapper }:
 
+with perlPackages;
+
 stdenv.mkDerivation rec {
   name = "arch-xdg-menu";
   version = "0.7.6.3";
 
   buildInputs = [ makeWrapper ];
-  propagatedBuildInputs = [ perl perlPackages.XMLParser ];
+  propagatedBuildInputs = [ perl XMLParser ];
 
   src = fetchurl {
     url = "https://arch.p5n.pp.ru/~sergej/dl/2018/arch-xdg-menu-${version}.tar.gz";
@@ -20,6 +22,6 @@ stdenv.mkDerivation rec {
 
   postFixup = ''
     wrapProgram $out/bin/xdg_menu \
-      --prefix PERL5LIB : ${lib.makePerlPath [ perlPackages.XMLParser ]}
+      --prefix PERL5LIB : ${makePerlPath [ XMLParser ]}
   '';
 }
