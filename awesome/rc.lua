@@ -25,7 +25,7 @@ local modkey = "Mod4"
 local altkey = "Mod1"
 
 local editor = os.getenv("EDITOR") or "nano" or "vi"
-local terminal = "st"
+local terminal = "st" or "xterm"
 local browser = "qutebrowser"
 
 awful.util.tagnames = {"1", "2", "3", "4", "5"}
