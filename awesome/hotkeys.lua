@@ -7,6 +7,7 @@ beautiful.init(awful.util.get_configuration_dir() .. "theme.lua")
 
 local terminal = "st"
 local browser = "qutebrowser"
+local spotlight = "dmenu_run"
 
 rootkeys = awful.util.table.join(
 	-- Hotkeys
@@ -15,7 +16,7 @@ rootkeys = awful.util.table.join(
 
 	-- Standard programs
 	awful.key({"Mod1"}, "space",
-		function() awful.spawn("dmenu-run-wrapper") end,
+		function() awful.spawn(spotlight) end,
 		{description = "run dmenu", group = "launcher"}),
 	awful.key({"Mod1"}, "Return",
 		function() awful.spawn(terminal) end,
