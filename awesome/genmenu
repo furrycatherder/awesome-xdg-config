@@ -1,4 +1,4 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash -p bash arch-xdg-menu
 
-xdg_menu --format awesome --root-menu ./application.xml > ./menu.lua
+xdg_menu --format awesome --root-menu ./applications.xml > ./menu.lua
