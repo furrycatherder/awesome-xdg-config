@@ -11,8 +11,8 @@ local separators = lain.util.separators
 local theme = {}
 
 theme.dir = awful.util.get_configuration_dir()
-theme.font = "sans-serif 12"
-theme.icon_font = "siji"
+theme.font = "sans-serif 8"
+theme.icon_font = "siji 8"
 
 theme.bg_normal = "alpha"
 theme.bg_focus = xrdb.background
@@ -72,10 +72,10 @@ theme.notification_fg = xrdb.foreground
 
 function theme.setup(s)
 	s.padding = {
-		left = 80,
-		right = 80,
-		top = 20,
-		bottom = 20
+		left = 10,
+		right = 10,
+		top = 10,
+		bottom = 10
 	}
 
 	-- TODO: Put this in a module.
@@ -222,7 +222,7 @@ function theme.setup(s)
 	volume_widget:set_visible(false)
 
 	temperature = lain.widget.temp {
-		tempfile = "/sys/devices/platform/it87.552/hwmon/hwmon0/temp2_input",
+		tempfile = "/sys/class/thermal/thermal_zone0/temp",
 		settings = function()
 			widget:set_markup(markup.font(theme.font, coretemp_now .. " °C"))
 		end

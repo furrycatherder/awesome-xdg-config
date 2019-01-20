@@ -175,7 +175,7 @@ client.connect_signal(
 			)
 		)
 
-		awful.titlebar(c, {size = 35}):setup {
+		awful.titlebar(c, {size = 25}):setup {
 			nil,
 			{
 				-- Middle
