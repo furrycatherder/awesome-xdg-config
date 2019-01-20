@@ -238,7 +238,7 @@ function theme.setup(s)
 
 	clock_icon = wibox.widget.textbox("")
 	clock_icon.font = theme.icon_font
-	clock = wibox.widget.textclock("%-m月 %-d %H:%M:%S", 1)
+	clock = wibox.widget.textclock("%-m/%-d %H:%M", 1)
 	clock_widget = wibox.widget {
 		layout = wibox.layout.fixed.horizontal,
 		spacing = 4,
