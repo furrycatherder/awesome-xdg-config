@@ -222,7 +222,6 @@ function theme.setup(s)
 	volume_widget:set_visible(false)
 
 	temperature = lain.widget.temp {
-		tempfile = "/sys/class/thermal/thermal_zone0/temp",
 		settings = function()
 			widget:set_markup(markup.font(theme.font, coretemp_now .. " °C"))
 		end
