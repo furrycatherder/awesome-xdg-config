@@ -5,7 +5,7 @@ local lain = require("lain")
 
 beautiful.init(awful.util.get_configuration_dir() .. "theme.lua")
 
-local terminal = "st"
+local terminal = "urxvt" or "xterm"
 local browser = "qutebrowser"
 local spotlight = "dmenu_run"
 
