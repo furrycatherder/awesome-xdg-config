@@ -31,8 +31,8 @@ theme.titlebar_fg_normal = xrdb.foreground
 theme.titlebar_fg_focus = xrdb.background
 theme.titlebar_font = "scientifica 8"
 
-theme.border_width = 4
-theme.border_normal = theme.titlebar_bg_normal
+theme.border_width = 2
+theme.border_normal = theme.titlebar_bg_focus
 theme.border_focus = theme.titlebar_bg_focus
 
 theme.tasklist_plain_task_name = true
