@@ -39,6 +39,7 @@ awful.layout.layouts = {
 }
 
 awful.spawn("wal -R")
+awful.spawn("compton -b --vsync drm")
 
 mymainmenu = awful.menu {
 	items = {
