@@ -12,7 +12,7 @@ local theme = {}
 
 theme.dir = awful.util.get_configuration_dir()
 theme.font = "sans-serif 8"
-theme.icon_font = "siji 8"
+theme.icon_font = "wuncon siji 8"
 
 theme.bg_normal = "alpha"
 theme.bg_focus = xrdb.background
@@ -29,7 +29,7 @@ theme.titlebar_bg_normal = xrdb.background
 theme.titlebar_bg_focus = xrdb.foreground
 theme.titlebar_fg_normal = xrdb.foreground
 theme.titlebar_fg_focus = xrdb.background
-theme.titlebar_font = "scientifica 8"
+theme.titlebar_font = "notype greentea 8"
 
 theme.border_width = 2
 theme.border_normal = theme.titlebar_bg_focus

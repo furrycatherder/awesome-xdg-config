@@ -182,6 +182,7 @@ client.connect_signal(
 				{
 					-- Title
 					align = "center",
+					font = beautiful.titlebar_font,
 					widget = awful.titlebar.widget.titlewidget(c)
 				},
 				buttons = buttons,
