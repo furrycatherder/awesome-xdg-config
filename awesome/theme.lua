@@ -236,6 +236,21 @@ function theme.setup(s)
 		temperature.widget
 	}
 
+	battery = lain.widget.bat {
+		battery = "BAT0",
+		settings = function()
+			widget:set_markup(markup.font(theme.font, bat_now.perc .. "%"))
+		end
+	}
+	battery_icon = wibox.widget.textbox("")
+	battery_icon.font = theme.icon_font
+	battery_widget = wibox.widget {
+		layout = wibox.layout.fixed.horizontal,
+		spacing = 4,
+		battery_icon,
+		battery.widget
+	}
+
 	clock_icon = wibox.widget.textbox("")
 	clock_icon.font = theme.icon_font
 	clock = wibox.widget.textclock("%-m/%-d %H:%M", 1)
@@ -268,6 +283,7 @@ function theme.setup(s)
 		spacing = 12,
 	}
 	table.insert(active_widgets, temperature_widget)
+	table.insert(active_widgets, battery_widget)
 	table.insert(active_widgets, clock_widget)
 
 	update_active_widgets = function()
