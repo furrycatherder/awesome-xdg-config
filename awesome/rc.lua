@@ -35,7 +35,7 @@ awful.layout.layouts = {
     awful.layout.suit.max.fullscreen,
 }
 
-mymainmenu = awful.menu {
+rootmenu = awful.menu {
 	items = {
 		{"Applications", xdgmenu},
 		{"Open terminal", terminal},
@@ -78,12 +78,11 @@ root.buttons(
 			{},
 			3,
 			function()
-				mymainmenu:toggle()
+				rootmenu:toggle()
 			end
 		)
 	)
 )
--- }}}
 
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
