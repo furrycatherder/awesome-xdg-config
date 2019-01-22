@@ -29,10 +29,10 @@ awful.util.tagnames = {"1", "2", "3", "4", "5"}
 awful.util.terminal = terminal
 awful.layout.layouts = {
     awful.layout.suit.floating,
-    awful.layout.suit.tile,
     awful.layout.suit.fair,
+    awful.layout.suit.tile,
+    awful.layout.suit.magnifier,
     awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier
 }
 
 awful.spawn("~/.config/wpg/wp_init.sh")
