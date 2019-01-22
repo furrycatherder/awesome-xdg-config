@@ -160,6 +160,8 @@ function theme.setup(s)
 	-- TODO: Add buttons back?
 	s.tasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags)
 
+	gears.wallpaper.maximized(os.getenv "HOME" .. "/.config/wpg/.current")
+
 	-- FIXME: We need to build up an inverse index to remove widgets by name.
 	mpd = lain.widget.mpd {
 		settings = function()
