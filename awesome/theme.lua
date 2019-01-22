@@ -150,9 +150,9 @@ function theme.setup(s)
 			local cur_notification = naughty.notify {
 				text = layout,
 				position = "top_middle",
-				font = "sans-serif 32",
+				font = "sans-serif 24",
 				replaces_id = prev_id,
-				margin = 20,
+				margin = 12,
 			}
 			prev_notification = cur_notification
 	end)
