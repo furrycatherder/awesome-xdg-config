@@ -17,7 +17,7 @@ theme.icon_font = "wuncon siji 8"
 theme.bg_normal = "alpha"
 theme.bg_focus = xrdb.background
 theme.bg_urgent = xrdb.color3
-theme.fg_normal = xrdb.background
+theme.fg_normal = xrdb.foreground
 theme.fg_focus = xrdb.foreground
 theme.fg_urgent = xrdb.foreground
 
@@ -26,14 +26,14 @@ theme.snapper_gap = theme.useless_gap
 awful.mouse.snap.default_distance = 16
 
 theme.titlebar_bg_normal = xrdb.background
-theme.titlebar_bg_focus = xrdb.foreground
+theme.titlebar_bg_focus = xrdb.color2
 theme.titlebar_fg_normal = xrdb.foreground
-theme.titlebar_fg_focus = xrdb.background
+theme.titlebar_fg_focus = xrdb.foreground
 theme.titlebar_font = "notype greentea 8"
 
 theme.border_width = 2
-theme.border_normal = theme.titlebar_bg_focus
-theme.border_focus = theme.titlebar_bg_focus
+theme.border_normal = xrdb.background
+theme.border_focus = xrdb.foreground
 
 theme.tasklist_plain_task_name = true
 theme.tasklist_disable_icon = true
@@ -60,14 +60,14 @@ theme.menu_width = 130
 theme.menu_bg_normal = xrdb.background
 theme.menu_fg_normal = xrdb.foreground
 theme.menu_bg_focus = xrdb.color6
-theme.menu_fg_focus = xrdb.background
-theme.menu_border_width = 2
+theme.menu_fg_focus = xrdb.foreground
+theme.menu_border_width = 1
 theme.menu_submenu_icon = ""
 
 theme.prompt_bg = xrdb.color0
 theme.prompt_fg = xrdb.color7
 
-theme.notification_bg = xrdb.background
+theme.notification_bg = xrdb.color6
 theme.notification_fg = xrdb.foreground
 
 function theme.setup(s)
