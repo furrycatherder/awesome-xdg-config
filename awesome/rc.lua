@@ -122,7 +122,6 @@ awful.rules.rules = {
 		properties = {floating = true}
 	},
 }
--- }}}
 
 -- Signal function to execute when a new client appears.
 client.connect_signal(
@@ -205,5 +204,4 @@ client.connect_signal(
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
--- }}}
 -- vim: set ts=2 sw=2 noet:
