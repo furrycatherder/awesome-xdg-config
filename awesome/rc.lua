@@ -38,8 +38,9 @@ awful.layout.layouts = {
     awful.layout.suit.magnifier
 }
 
-awful.spawn("wal -R")
-awful.spawn("compton -b --vsync drm")
+awful.spawn("~/.config/wpg/wp_init.sh")
+awful.spawn("compton -b --vsync opengl-mswc --backend glx \
+	--blur-method kawase --blur-background --blur-strength 10")
 
 mymainmenu = awful.menu {
 	items = {
