@@ -8,11 +8,11 @@ geom=($(</sys/class/graphics/fb0/virtual_size tr "," " "))
 width=$((3 * geom[0] / 5))
 height=40
 xpos=$(((geom[0] - width) / 2))
-ypos=$(((5 * geom[1] - height) / 12))
+ypos=$((5 * (geom[1] - height) / 12))
 
 export extraFlagsArray+=(
 	"-q"
-	"-fn" "sans-serif"
+	"-fn" "serif"
 	"-nb" "${background:-#ffffff}"
 	"-sb" "${color2:-#ffffff}"
 	"-nf" "${foreground:-#000000}"
