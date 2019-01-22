@@ -292,8 +292,12 @@ function theme.setup(s)
 			-- s.tasklist,
 			nil,
 			nil,
-			wibox.container.background(wibox.container.margin(s.status, 12, 12, 0, 0),
-				xrdb.foreground),
+			wibox.container.margin(
+				wibox.container.background(
+					wibox.container.margin(s.status, 12, 12, 0, 0),
+					xrdb.color2),
+				1, 1, 1, 1,
+				theme.fg_normal)
 		}
 	end
 	update_active_widgets()
