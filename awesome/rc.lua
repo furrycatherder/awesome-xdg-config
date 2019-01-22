@@ -118,6 +118,10 @@ awful.rules.rules = {
 		properties = {floating = true}
 	},
 	{
+		rule = {class = "Firefox"},
+		properties = {titlebars_enabled = false}
+	},
+	{
 		rule = {class = "TeamViewer"},
 		properties = {floating = true}
 	},
