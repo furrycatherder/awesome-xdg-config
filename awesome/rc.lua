@@ -35,7 +35,7 @@ awful.layout.layouts = {
     awful.layout.suit.max.fullscreen,
 }
 
-awful.spawn("~/.config/wpg/wp_init.sh")
+awful.spawn(os.getenv("HOME") .. "/.config/wpg/wp_init.sh")
 awful.spawn("compton -b --vsync opengl-mswc --backend glx \
 	--blur-method kawase --blur-background --blur-strength 10")
 
