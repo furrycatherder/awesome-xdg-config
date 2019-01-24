@@ -3,7 +3,7 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 local lain = require("lain")
 
 local terminal = "urxvt" or "xterm"
-local browser = "qutebrowser"
+local browser = "firefox"
 local spotlight = "dmenu_run"
 
 root_hotkeys = awful.util.table.join(
@@ -16,7 +16,7 @@ root_hotkeys = awful.util.table.join(
 		{description = "run dmenu", group = "launcher"}),
 	awful.key({"Mod1"}, "Return", function() awful.spawn(terminal) end,
 		{description = "open a terminal", group = "launcher"}),
-	awful.key({"Mod4"}, "q", function() awful.spawn(browser) end,
+	awful.key({"Mod4"}, "b", function() awful.spawn(browser) end,
 		{description = "open a browser", group = "launcher"}),
 	awful.key({"Mod4"}, "z", function() awful.screen.focused().quake:toggle() end,
 		{description = "toggle quake", group = "launcher"}),
