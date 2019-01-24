@@ -20,11 +20,11 @@ awful.util.terminal = "urxvt" or "st" or "xterm"
 awful.util.browser = "firefox"
 awful.util.tagnames = {"1", "2", "3", "4", "5"}
 awful.layout.layouts = {
-	awful.layout.suit.floating,
 	awful.layout.suit.fair,
 	awful.layout.suit.tile,
 	awful.layout.suit.magnifier,
 	awful.layout.suit.max.fullscreen,
+	awful.layout.suit.floating,
 }
 awful.mouse.snap.default_distance = 16
 
