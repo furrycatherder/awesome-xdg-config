@@ -15,25 +15,25 @@ theme.font = "sans-serif 8"
 theme.icon_font = "wuncon siji 8"
 
 theme.bg_normal = "alpha"
+theme.fg_normal = xrdb.color0
 theme.bg_focus = xrdb.background
-theme.bg_urgent = xrdb.color3
-theme.fg_normal = xrdb.background
 theme.fg_focus = xrdb.foreground
+theme.bg_urgent = xrdb.color1
 theme.fg_urgent = xrdb.foreground
 
 theme.useless_gap = 4
 theme.snapper_gap = theme.useless_gap
 
 theme.titlebar_bg_normal = xrdb.background
-theme.titlebar_bg_focus = xrdb.color3
 theme.titlebar_fg_normal = xrdb.foreground
-theme.titlebar_fg_focus = xrdb.background
+theme.titlebar_bg_focus = xrdb.color2
+theme.titlebar_fg_focus = xrdb.color0
 theme.titlebar_font = "notype greentea 8"
-theme.titlebar_height = 25
+theme.titlebar_height = 28
 
 theme.border_width = 2
-theme.border_normal = xrdb.foreground
-theme.border_focus = xrdb.background
+theme.border_normal = xrdb.color0
+theme.border_focus = xrdb.color7
 
 theme.tasklist_plain_task_name = true
 theme.tasklist_disable_icon = true
@@ -53,8 +53,8 @@ theme.tasklist_shape_border_color_focus = xrdb.background
 theme.hotkeys_bg = xrdb.background
 theme.hotkeys_fg = xrdb.foreground
 theme.hotkeys_modifiers_fg = xrdb.color5
-theme.hotkeys_font = "sans-serif bold 12"
-theme.hotkeys_description_font = "sans-serif 12"
+theme.hotkeys_font = "sans-serif bold 11"
+theme.hotkeys_description_font = "sans-serif italic 11"
 theme.hotkeys_group_margin = 20
 theme.hotkeys_border_width = 2
 theme.hotkeys_border_color = xrdb.foreground
@@ -233,7 +233,7 @@ theme.setup = function(s)
 					wibox.container.margin(s.status, 12, 12, 0, 0),
 					xrdb.color2),
 				1, 1, 1, 1,
-				theme.border_focus)
+				theme.border_normal)
 		}
 	end
 	update_active_widgets()
