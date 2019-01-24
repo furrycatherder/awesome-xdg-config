@@ -1,6 +1,9 @@
-local awful = require("awful")
-local hotkeys_popup = require("awful.hotkeys_popup").widget
-local lain = require("lain")
+local awful = require "awful"
+local lain = require "lain"
+local hotkeys_popup = require "awful.hotkeys_popup.widget".new {
+	width = 3 * screen.primary.geometry.width / 5,
+	height = 4 * screen.primary.geometry.height / 5,
+}
 
 local terminal = "urxvt" or "xterm"
 local browser = "firefox"
@@ -8,7 +11,7 @@ local spotlight = "dmenu_run"
 
 root_hotkeys = awful.util.table.join(
 	-- Hotkeys
-	awful.key({"Mod4"}, "s", hotkeys_popup.show_help,
+	awful.key({"Mod4"}, "s", function() hotkeys_popup:show_help() end,
 		{description = "show help", group = "awesome"}),
 
 	-- Standard programs
