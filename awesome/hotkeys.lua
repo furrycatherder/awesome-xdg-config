@@ -88,7 +88,7 @@ root_hotkeys = awful.util.table.join(
 	end, {description = "decrease the number of columns", group = "layout"})
 )
 
-clientkeys = awful.util.table.join(
+client_hotkeys = awful.util.table.join(
 	awful.key({"Mod4"}, "q", function(c) c:kill() end,
 		{description = "close", group = "client"}),
 	awful.key({"Mod4"}, "t", function(c) c.ontop = not c.ontop end,
