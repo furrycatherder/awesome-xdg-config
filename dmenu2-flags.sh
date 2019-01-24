@@ -16,7 +16,7 @@ export extraFlagsArray+=(
 	"-nb" "${background:-#ffffff}"
 	"-sb" "${color2:-#ffffff}"
 	"-nf" "${foreground:-#000000}"
-	"-sf" "${foreground:-#000000}"
+	"-sf" "${background:-#000000}"
 	"-x" "$xpos" "-y" "$ypos"
 	"-w" "$width" "-h" "$height"
 	"-dim" "0.8"

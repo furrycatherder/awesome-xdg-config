@@ -3,13 +3,13 @@ local wibox = require("wibox")
 local gears = require("gears")
 local xrdb = require("beautiful.xresources").get_current_theme()
 local lain = require("lain")
-local naughty = require("naughty")
-
 local markup = lain.util.markup
 local separators = lain.util.separators
 
-local theme = {}
+local wallpaper = os.getenv("HOME") .. "/.config/wpg/.current"
+gears.wallpaper.maximized(wallpaper)
 
+local theme = {}
 theme.dir = awful.util.get_configuration_dir()
 theme.font = "sans-serif 8"
 theme.icon_font = "wuncon siji 8"
@@ -17,23 +17,23 @@ theme.icon_font = "wuncon siji 8"
 theme.bg_normal = "alpha"
 theme.bg_focus = xrdb.background
 theme.bg_urgent = xrdb.color3
-theme.fg_normal = xrdb.foreground
+theme.fg_normal = xrdb.background
 theme.fg_focus = xrdb.foreground
 theme.fg_urgent = xrdb.foreground
 
 theme.useless_gap = 4
 theme.snapper_gap = theme.useless_gap
-awful.mouse.snap.default_distance = 16
 
 theme.titlebar_bg_normal = xrdb.background
-theme.titlebar_bg_focus = xrdb.color2
+theme.titlebar_bg_focus = xrdb.color3
 theme.titlebar_fg_normal = xrdb.foreground
-theme.titlebar_fg_focus = xrdb.foreground
+theme.titlebar_fg_focus = xrdb.background
 theme.titlebar_font = "notype greentea 8"
+theme.titlebar_height = 25
 
 theme.border_width = 2
-theme.border_normal = xrdb.background
-theme.border_focus = xrdb.foreground
+theme.border_normal = xrdb.foreground
+theme.border_focus = xrdb.background
 
 theme.tasklist_plain_task_name = true
 theme.tasklist_disable_icon = true
@@ -45,12 +45,16 @@ theme.tasklist_fg_focus = xrdb.background
 theme.tasklist_bg_focus = xrdb.color5
 theme.tasklist_align = "center"
 theme.tasklist_spacing = theme.useless_gap
+theme.tasklist_shape_border_width = 1
+theme.tasklist_shape_border_width_focus = 1
+theme.tasklist_shape_border_color = xrdb.foreground
+theme.tasklist_shape_border_color_focus = xrdb.background
 
 theme.hotkeys_bg = xrdb.background
 theme.hotkeys_fg = xrdb.foreground
 theme.hotkeys_modifiers_fg = xrdb.color5
-theme.hotkeys_font = "sans-serif bold 14"
-theme.hotkeys_description_font = "sans-serif 14"
+theme.hotkeys_font = "sans-serif bold 12"
+theme.hotkeys_description_font = "sans-serif 12"
 theme.hotkeys_group_margin = 20
 theme.hotkeys_border_width = 2
 theme.hotkeys_border_color = xrdb.foreground
@@ -60,7 +64,7 @@ theme.menu_width = 130
 theme.menu_bg_normal = xrdb.background
 theme.menu_fg_normal = xrdb.foreground
 theme.menu_bg_focus = xrdb.color6
-theme.menu_fg_focus = xrdb.foreground
+theme.menu_fg_focus = xrdb.background
 theme.menu_border_width = 1
 theme.menu_submenu_icon = ""
 
@@ -68,101 +72,34 @@ theme.prompt_bg = xrdb.color0
 theme.prompt_fg = xrdb.color7
 
 theme.notification_bg = xrdb.color6
-theme.notification_fg = xrdb.foreground
+theme.notification_fg = xrdb.background
 
-function theme.setup(s)
-	s.padding = {
-		left = 10,
-		right = 10,
-		top = 10,
-		bottom = 10
+theme.titlebar = function(c, buttons)
+	awful.titlebar(c, {size = theme.titlebar_height}):setup {
+		nil,
+		{
+			{
+				align = "center",
+				font = theme.titlebar_font,
+				widget = awful.titlebar.widget.titlewidget(c)
+			},
+			buttons = buttons(c),
+			layout = wibox.layout.flex.horizontal
+		},
+		nil,
+		layout = wibox.layout.align.horizontal
 	}
+end
 
-	-- TODO: Put this in a module.
-	awful.tag(awful.util.tagnames, s, awful.layout.layouts)
+screen.primary.padding = {
+	left = 10,
+	right = 10,
+	top = 10,
+	bottom = 10
+}
 
-	-- Bind all key numbers to tags.
-	-- Be careful: we use keycodes to make it works on any keyboard layout.
-	-- This should map on the top row of your keyboard, usually 1 to 9.
-	for i = 1, tag:instances() do
-		rootkeys = awful.util.table.join(
-			rootkeys,
-			-- View tag only.
-			awful.key({"Mod4"}, "#" .. i + 9,
-				function()
-					local screen = awful.screen.focused()
-					local tag = screen.tags[i]
-					if tag then
-						tag:view_only()
-					end
-				end,
-				{description = "view tag #" .. i, group = "tag"}),
-
-			-- Toggle tag display.
-			awful.key({"Mod4", "Control"}, "#" .. i + 9,
-				function()
-					local screen = awful.screen.focused()
-					local tag = screen.tags[i]
-					if tag then
-						awful.tag.viewtoggle(tag)
-					end
-				end,
-				{description = "toggle tag #" .. i, group = "tag"}),
-
-			-- Move client to tag.
-			awful.key({"Mod4", "Shift"}, "#" .. i + 9,
-				function()
-					if client.focus then
-						local tag = client.focus.screen.tags[i]
-						if tag then
-							client.focus:move_to_tag(tag)
-						end
-					end
-				end,
-				{description = "move focused client to tag #" .. i, group = "tag"}),
-
-			-- Toggle tag on focused client.
-			awful.key({"Mod4", "Control", "Shift"}, "#" .. i + 9,
-				function()
-					if client.focus then
-						local tag = client.focus.screen.tags[i]
-						if tag then
-							client.focus:toggle_tag(tag)
-						end
-					end
-				end,
-				{description = "toggle focused client on tag #" .. i, group = "tag"})
-			)
-	end
-
-	-- TODO: Put this in a module.
-	prev_notification = nil
-	tag.connect_signal("property::layout", function(t)
-			local layout = awful.layout.getname(t.layout)
-			local prev_id
-
-			if prev_notification == nil then
-				prev_id = nil
-			else
-				prev_id = prev_notification.id
-			end
-
-			local cur_notification = naughty.notify {
-				text = layout,
-				position = "top_middle",
-				font = "sans-serif 24",
-				replaces_id = prev_id,
-				margin = 12,
-			}
-			prev_notification = cur_notification
-	end)
-
-	-- TODO: Add buttons back?
-	s.tasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags)
-
-	gears.wallpaper.maximized(os.getenv "HOME" .. "/.config/wpg/.current")
-
-	-- FIXME: We need to build up an inverse index to remove widgets by name.
+theme.setup = function(s)
+	-- FIXME: We need to build up an inverse index to remove widgets by name?
 	mpd = lain.widget.mpd {
 		settings = function()
 			mpd_notification_preset.fg = xrdb.foreground
@@ -262,9 +199,7 @@ function theme.setup(s)
 		clock
 	}
 
-	-- Create the wibox
-	s.bar =
-		awful.wibar {
+	s.bar = awful.wibar {
 		screen = s,
 		position = "top",
 		height = 30,
@@ -291,7 +226,6 @@ function theme.setup(s)
 		s.status = wibox.widget(active_widgets)
 		s.bar:setup {
 			layout = wibox.layout.align.horizontal,
-			-- s.tasklist,
 			nil,
 			nil,
 			wibox.container.margin(
@@ -299,12 +233,10 @@ function theme.setup(s)
 					wibox.container.margin(s.status, 12, 12, 0, 0),
 					xrdb.color2),
 				1, 1, 1, 1,
-				theme.fg_normal)
+				theme.border_focus)
 		}
 	end
 	update_active_widgets()
 end
 
 return theme
-
--- vim: set ts=2 sw=2 noet:
