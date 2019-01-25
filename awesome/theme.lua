@@ -75,8 +75,20 @@ theme.notification_bg = xrdb.color6
 theme.notification_fg = xrdb.background
 
 theme.titlebar = function(c, buttons)
+	client_tags = awful.widget.taglist(screen.primary, function(t)
+		-- Return true if t is in client_tags.
+		curtags = c:tags()
+		for _, tag in pairs(curtags) do
+			if t == tag then
+				return true
+			end
+		end
+
+		return false
+	end)
+
 	awful.titlebar(c, {size = theme.titlebar_height}):setup {
-		nil,
+		client_tags,
 		{
 			{
 				align = "center",
