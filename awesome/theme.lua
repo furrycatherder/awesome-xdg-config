@@ -74,6 +74,8 @@ theme.prompt_fg = xrdb.color7
 theme.notification_bg = xrdb.color6
 theme.notification_fg = xrdb.background
 
+theme.taglist_font = "notype greentea 8"
+
 theme.titlebar = function(c, buttons)
 	client_tags = awful.widget.taglist(screen.primary, function(t)
 		-- Return true if t is in client_tags.
