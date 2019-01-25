@@ -125,7 +125,7 @@ for i = 1, tag:instances() do
 			end
 		end, {description = "view tag #" .. i, group = "tag"}),
 
-		awful.key({"Mod4", "Control"}, i, function()
+		awful.key({"Mod4", "Shift"}, i, function()
 			local screen = awful.screen.focused()
 			local tag = screen.tags[i]
 			if tag then
@@ -133,7 +133,7 @@ for i = 1, tag:instances() do
 			end
 		end, {description = "toggle tag #" .. i, group = "tag"}),
 
-		awful.key({"Mod4", "Shift"}, i, function()
+		awful.key({"Mod4", "Control"}, i, function()
 			if client.focus then
 				local tag = client.focus.screen.tags[i]
 				if tag then
