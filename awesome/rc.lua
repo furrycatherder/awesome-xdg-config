@@ -91,5 +91,6 @@ awful.rules.rules = {
 	{rule = {class = "Pavucontrol"}, properties = {floating = true}},
 	{rule = {class = "TeamViewer"},  properties = {floating = true}},
 	{rule = {class = "Firefox"},     properties = {titlebars_enabled = false}},
+	{rule = {class = "Gimp"},        properties = {titlebars_enabled = false}},
 	{rule = {class = "feh"},         properties = {floating = true} },
 }
