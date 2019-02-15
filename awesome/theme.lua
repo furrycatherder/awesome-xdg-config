@@ -60,7 +60,7 @@ theme.notification_bg = xrdb.color6
 theme.notification_fg = theme.fg_normal
 
 theme.tasklist_align = "center"
-theme.tasklist_plain_task_name = false
+theme.tasklist_plain_task_name = true
 theme.tasklist_disable_icon = true
 theme.tasklist_spacing = theme.useless_gap
 theme.tasklist_shape_border_width = 1
