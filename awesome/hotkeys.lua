@@ -75,6 +75,11 @@ root_hotkeys = awful.util.table.join(
 	end, {description = "restore minimized", group = "client"}),
 
 	-- Layout manipulation
+	awful.key({}, "XF86LaunchA", function() awful.layout.set(awful.layout.suit.floating) end,
+		{description = "set to floating", group = "layout"}),
+	awful.key({}, "XF86LaunchB", function() awful.layout.set(awful.layout.suit.fair) end,
+
+		{description = "set to vertical fair", group = "layout"}),
 	awful.key({"Mod4"}, "k", function() awful.layout.inc(1) end,
 		{description = "select next", group = "layout"}),
 	awful.key({"Mod4"}, "j", function() awful.layout.inc(-1) end,
