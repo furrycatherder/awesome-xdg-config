@@ -8,6 +8,7 @@ local hotkeys_popup = require "awful.hotkeys_popup.widget".new {
 local terminal = "urxvt" or "xterm"
 local browser = "firefox"
 local spotlight = "dmenu_run"
+local locker = "slock"
 
 root_hotkeys = awful.util.table.join(
 	-- Hotkeys
@@ -21,6 +22,8 @@ root_hotkeys = awful.util.table.join(
 		{description = "open a terminal", group = "launcher"}),
 	awful.key({"Mod4"}, "b", function() awful.spawn(browser) end,
 		{description = "open a browser", group = "launcher"}),
+	awful.key({"Mod4"}, "l", function() awful.spawn(locker) end,
+		{description = "lock the screen", group = "launcher"}),
 	awful.key({"Mod4"}, "z", function() awful.screen.focused().quake:toggle() end,
 		{description = "toggle quake", group = "launcher"}),
 
@@ -28,6 +31,12 @@ root_hotkeys = awful.util.table.join(
 		{description = "reload awesome", group = "awesome"}),
 	awful.key({"Mod4", "Shift"}, "q", awesome.quit,
 		{description = "quit awesome", group = "awesome"}),
+
+	-- Media keys
+	awful.key({}, "XF86AudioLowerVolume", function() awful.spawn("amixer set Master 2dB-") end,
+		{description = "lower volume", group = "media"}),
+	awful.key({}, "XF86AudioRaiseVolume", function() awful.spawn("amixer set Master 2dB+") end,
+		{description = "raise volume", group = "media"}),
 
 	-- Tag browsing
 	awful.key({"Mod4"}, "Left", awful.tag.viewprev,
