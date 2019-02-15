@@ -27,11 +27,11 @@ theme.fg_normal = xrdb.color0
 theme.fg_focus = xrdb.foreground
 theme.fg_urgent = xrdb.foreground
 
-theme.titlebar_height = 28
+theme.titlebar_height = 24
 theme.titlebar_bg_normal = xrdb.background
 theme.titlebar_bg_focus = xrdb.color2
 theme.titlebar_fg_normal = xrdb.foreground
-theme.titlebar_fg_focus = xrdb.color0
+theme.titlebar_fg_focus = theme.fg_normal
 
 theme.border_width = 2
 theme.border_normal = xrdb.color0
@@ -50,18 +50,18 @@ theme.menu_width = 130
 theme.menu_border_width = 1
 theme.menu_bg_normal = xrdb.background
 theme.menu_bg_focus = xrdb.color6
-theme.menu_fg_normal = xrdb.foreground
-theme.menu_fg_focus = xrdb.background
+theme.menu_fg_normal = theme.fg_focus
+theme.menu_fg_focus = theme.fg_normal
 
 theme.prompt_bg = xrdb.color0
 theme.prompt_fg = xrdb.color7
 
 theme.notification_bg = xrdb.color6
-theme.notification_fg = xrdb.background
+theme.notification_fg = theme.fg_normal
 
 theme.tasklist_align = "center"
 theme.tasklist_plain_task_name = false
-theme.tasklist_disable_icon = false
+theme.tasklist_disable_icon = true
 theme.tasklist_spacing = theme.useless_gap
 theme.tasklist_shape_border_width = 1
 theme.tasklist_shape_border_width_focus = 1
@@ -71,8 +71,9 @@ theme.tasklist_bg_minimize = xrdb.background
 theme.tasklist_fg_normal = xrdb.foreground
 theme.tasklist_fg_focus = xrdb.background
 theme.tasklist_fg_minimize = xrdb.foreground
-theme.tasklist_shape_border_color = xrdb.foreground
-theme.tasklist_shape_border_color_focus = xrdb.background
+theme.tasklist_shape = gears.shape.rectangle
+theme.tasklist_shape_border_color = xrdb.color0
+theme.tasklist_shape_border_color_focus = xrdb.color8
 
 theme.titlebar = function(c, buttons)
 	client_tags = awful.widget.taglist(screen.primary, function(t)
@@ -106,8 +107,8 @@ end
 screen.primary.padding = {
 	left = 10,
 	right = 10,
-	top = 10,
-	bottom = 10
+	top = 0,
+	bottom = 0
 }
 
 theme.setup = function(s)
@@ -220,7 +221,7 @@ theme.setup = function(s)
 	s.bar = awful.wibar {
 		screen = s,
 		position = "top",
-		height = 30,
+		height = 28,
 		width = s.geometry.width - 2 * theme.snapper_gap
 	}
 
@@ -230,11 +231,15 @@ theme.setup = function(s)
 		top = bar_struts.top + theme.snapper_gap
 	}
 
+	s.tasklist = awful.widget.tasklist(s,
+		awful.widget.tasklist.filter.currenttags)
+
 	-- Table containing active widgets. Widgets should remove themselves
-	-- (in an inverted way?) from the table when they're not visible.
+	-- (in an inverted way?) (use remove_widgets) from the table when
+	-- they're not visible.
 	active_widgets = {
 		layout = wibox.layout.fixed.horizontal,
-		spacing = 12,
+		spacing = 8,
 	}
 	table.insert(active_widgets, volume_widget)
 	table.insert(active_widgets, temperature_widget)
@@ -246,13 +251,13 @@ theme.setup = function(s)
 			wibox.container.background(
 				wibox.container.margin(
 					wibox.widget(active_widgets),
-					12, 12, 0, 0),
-				xrdb.color2),
+					8, 8, 0, 0),
+				xrdb.color6),
 			1, 1, 1, 1,
-			theme.border_normal)
+			theme.fg_normal)
 
 		s.bar:setup {
-			nil,
+			s.tasklist,
 			nil,
 			status_widgets,
 			layout = wibox.layout.align.horizontal
