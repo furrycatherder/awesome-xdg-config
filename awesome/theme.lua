@@ -35,7 +35,7 @@ theme.titlebar_fg_focus = xrdb.color0
 
 theme.border_width = 2
 theme.border_normal = xrdb.color0
-theme.border_focus = xrdb.color7
+theme.border_focus = xrdb.color8
 
 theme.hotkeys_group_margin = 20
 theme.hotkeys_border_width = 2
