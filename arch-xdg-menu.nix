@@ -22,6 +22,6 @@ stdenv.mkDerivation rec {
 
   postFixup = ''
     wrapProgram $out/bin/xdg_menu \
-      --prefix PERL5LIB : ${makePerlPath [ XMLParser ]}
+      --prefix PERL5LIB : ${lib.makePerlPath [ XMLParser ]}
   '';
 }

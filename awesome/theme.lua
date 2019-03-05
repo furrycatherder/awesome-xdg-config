@@ -13,23 +13,23 @@ local theme = {}
 theme.useless_gap = 4
 theme.snapper_gap = theme.useless_gap
 
-theme.font = "sans-serif 8"
-theme.icon_font = "wuncon siji 8"
-theme.taglist_font = "notype greentea 8"
-theme.titlebar_font = "notype greentea 8"
+theme.font = "greentea 8"
+theme.icon_font = "siji 8"
+theme.taglist_font = "greentea 8"
+theme.titlebar_font = "greentea 8"
 theme.hotkeys_font = "sans-serif bold 11"
 theme.hotkeys_description_font = "sans-serif italic 11"
 
 theme.bg_normal = "alpha"
 theme.bg_focus = xrdb.background
 theme.bg_urgent = xrdb.color1
-theme.fg_normal = xrdb.color0
+theme.fg_normal = xrdb.foreground
 theme.fg_focus = xrdb.foreground
 theme.fg_urgent = xrdb.foreground
 
 theme.titlebar_height = 24
 theme.titlebar_bg_normal = xrdb.background
-theme.titlebar_bg_focus = xrdb.color2
+theme.titlebar_bg_focus = xrdb.color8
 theme.titlebar_fg_normal = xrdb.foreground
 theme.titlebar_fg_focus = theme.fg_normal
 
@@ -222,7 +222,7 @@ theme.setup = function(s)
 		screen = s,
 		position = "top",
 		height = 28,
-		width = s.geometry.width - 2 * theme.snapper_gap
+		width = (1 / 2) * s.geometry.width - 2 * theme.snapper_gap
 	}
 
 	s.bar.y = s.bar.y + theme.snapper_gap
@@ -239,11 +239,10 @@ theme.setup = function(s)
 	-- they're not visible.
 	active_widgets = {
 		layout = wibox.layout.fixed.horizontal,
-		spacing = 8,
+		spacing = 12,
 	}
 	table.insert(active_widgets, volume_widget)
 	table.insert(active_widgets, temperature_widget)
-	table.insert(active_widgets, battery_widget)
 	table.insert(active_widgets, clock_widget)
 
 	update_active_widgets = function()
@@ -251,9 +250,9 @@ theme.setup = function(s)
 			wibox.container.background(
 				wibox.container.margin(
 					wibox.widget(active_widgets),
-					8, 8, 0, 0),
-				xrdb.color6),
-			1, 1, 1, 1,
+					12, 12, 0, 0),
+				xrdb.background),
+			0, 0, 0, 1,
 			theme.fg_normal)
 
 		s.bar:setup {
