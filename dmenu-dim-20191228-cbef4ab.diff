@@ -1,0 +1,118 @@
+diff --git a/dmenu.1 b/dmenu.1
+index ec49170..fffa0a8 100644
+--- a/dmenu.1
++++ b/dmenu.1
+@@ -4,6 +4,8 @@ dmenu \- dynamic menu
+ .SH SYNOPSIS
+ .B dmenu
+ .RB [ \-bfiv ]
++.RB [ \-dim
++.IR opacity ]
+ .RB [ \-l
+ .IR lines ]
+ .RB [ \-m
+@@ -47,6 +49,9 @@ is faster, but will lock up X until stdin reaches end\-of\-file.
+ .B \-i
+ dmenu matches menu items case insensitively.
+ .TP
++.BI \-dim " opacity"
++enables screen dimming when dmenu appers. Takes dim opacity as argument.
++.TP
+ .BI \-l " lines"
+ dmenu lists items vertically, with the given number of lines.
+ .TP
+diff --git a/dmenu.c b/dmenu.c
+index 7c24e99..b20268b 100644
+--- a/dmenu.c
++++ b/dmenu.c
+@@ -24,6 +24,8 @@
+                              * MAX(0, MIN((y)+(h),(r).y_org+(r).height) - MAX((y),(r).y_org)))
+ #define LENGTH(X)             (sizeof X / sizeof X[0])
+ #define TEXTW(X)              (drw_fontset_getwidth(drw, (X)) + lrpad)
++#define OPAQUE                0xffffffff
++#define OPACITY               "_NET_WM_WINDOW_OPACITY"
+ 
+ /* enums */
+ enum { SchemeNorm, SchemeSel, SchemeOut, SchemeLast }; /* color schemes */
+@@ -51,7 +53,9 @@ static int mon = -1, screen;
+ static Atom clip, utf8;
+ static Display *dpy;
+ static Window root, parentwin, win;
++static Window dim;
+ static XIC xic;
++static double dimopacity = 0.0;
+ 
+ static Drw *drw;
+ static Clr *scheme[SchemeLast];
+@@ -593,6 +597,8 @@ setup(void)
+ {
+ 	int x, y, i, j;
+ 	unsigned int du;
++	Screen *dfl = DefaultScreenOfDisplay(dpy);
++	int dimx, dimy, dimw, dimh;
+ 	XSetWindowAttributes swa;
+ 	XIM xim;
+ 	Window w, dw, *dws;
+@@ -644,6 +650,12 @@ setup(void)
+ 		x = info[i].x_org + dmx;
+ 		y = info[i].y_org + (topbar ? dmy : info[i].height - mh - dmy);
+ 		mw = (dmw>0 ? dmw : info[i].width);
++
++		dimx = info[i].x_org;
++		dimy = info[i].y_org;
++		dimw = info[i].width;
++		dimh = info[i].height;
++
+ 		XFree(info);
+ 	} else
+ #endif
+@@ -654,13 +666,39 @@ setup(void)
+ 		x = dmx;
+ 		y = topbar ? dmy : wa.height - mh - dmy;
+ 		mw = (dmw>0 ? dmw : wa.width);
++
++		dimx = 0;
++		dimy = 0;
++		dimw = WidthOfScreen(dfl);
++		dimh = HeightOfScreen(dfl);
+ 	}
+ 	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
+ 	inputw = MIN(inputw, mw/3);
+ 	match();
+ 
+-	/* create menu window */
++	/* create dim window */
+ 	swa.override_redirect = True;
++	if(dimopacity > 0) {
++		swa.background_pixel = scheme[SchemeNorm][ColBg].pixel;
++		swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
++		dim = XCreateWindow(dpy, root, dimx, dimy, dimw, dimh, 0,
++				DefaultDepth(dpy, screen), CopyFromParent,
++				DefaultVisual(dpy, screen),
++				CWOverrideRedirect | CWBackPixel | CWEventMask, &swa);
++		XClassHint dimhint = { .res_name = ch.res_name, .res_class =
++			ch.res_class };
++		XSetClassHint(dpy, dim, &dimhint);
++
++		dimopacity = MIN(MAX(dimopacity, 0), 1);
++		unsigned int dimopacity_set = (unsigned int)(dimopacity * OPAQUE);
++		XChangeProperty(dpy, dim, XInternAtom(dpy, OPACITY, False),
++				XA_CARDINAL, 32, PropModeReplace,
++				(unsigned char *) &dimopacity_set, 1L);
++
++		XMapRaised(dpy, dim);
++	}
++
++	/* create menu window */
+ 	swa.background_pixel = scheme[SchemeNorm][ColBg].pixel;
+ 	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
+ 	win = XCreateWindow(dpy, parentwin, x, y, mw, mh, 0,
+@@ -730,6 +768,8 @@ main(int argc, char *argv[])
+ 			dmw = atoi(argv[++i]);
+ 		else if (!strcmp(argv[i], "-m"))
+ 			mon = atoi(argv[++i]);
++		else if (!strcmp(argv[i], "-dim"))  /* dim opacity */
++			dimopacity = atof(argv[++i]);
+ 		else if (!strcmp(argv[i], "-p"))   /* adds prompt to left of input field */
+ 			prompt = argv[++i];
+ 		else if (!strcmp(argv[i], "-fn"))  /* font or font set */

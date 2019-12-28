@@ -1,0 +1,39 @@
+diff --git a/dmenu.c b/dmenu.c
+index b20268b..72cae1a 100644
+--- a/dmenu.c
++++ b/dmenu.c
+@@ -37,6 +37,7 @@ struct item {
+ };
+ 
+ static char text[BUFSIZ] = "";
++static char originaltext[BUFSIZ] = "";
+ static char *embed;
+ static int bh, mw, mh;
+ static int dmx = 0; /* put dmenu at this x offset */
+@@ -496,10 +497,22 @@ insert:
+ 	case XK_Tab:
+ 		if (!sel)
+ 			return;
+-		strncpy(text, sel->text, sizeof text - 1);
+-		text[sizeof text - 1] = '\0';
+-		cursor = strlen(text);
+-		match();
++		if (strcmp(text, sel->text)) {
++			strncpy(originaltext, text, sizeof originaltext);
++			strncpy(text, sel->text, sizeof text);
++			cursor = strlen(text);
++		} else {
++			if (sel && sel->right) {
++				sel = sel->right;
++				strncpy(text, sel->text, sizeof text);
++				cursor = strlen(text);
++			}
++			else {
++				strncpy(text, originaltext, sizeof text);
++				cursor = strlen(text);
++				match();
++			}
++		}
+ 		break;
+ 	}
+ 
