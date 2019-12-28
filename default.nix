@@ -30,7 +30,7 @@
       ];
     });
 
-    dmenu2 = previous.dmenu2.overrideAttrs (super: {
+    dmenu = previous.dmenu.overrideAttrs (super: {
       buildInputs = super.buildInputs ++ [ makeWrapper ];
       postFixup = ''
         wrapProgram $out/bin/dmenu_run --run "source ${./dmenu2-flags.sh}"

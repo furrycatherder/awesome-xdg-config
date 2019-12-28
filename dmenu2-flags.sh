@@ -11,13 +11,13 @@ xpos=$(((geom[0] - width) / 2))
 ypos=$((5 * (geom[1] - height) / 12))
 
 export extraFlagsArray+=(
-	"-q"
+#	"-q"
 	"-fn" "serif"
 	"-nb" "${background:-#ffffff}"
 	"-sb" "${color2:-#ffffff}"
 	"-nf" "${foreground:-#000000}"
 	"-sf" "${background:-#000000}"
-	"-x" "$xpos" "-y" "$ypos"
-	"-w" "$width" "-h" "$height"
-	"-dim" "0.8"
+#	"-x" "$xpos" "-y" "$ypos"
+#	"-w" "$width" "-h" "$height"
+#	"-dim" "0.2"
 )
