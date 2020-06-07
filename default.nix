@@ -31,7 +31,7 @@ with final; {
   });
 
   dmenu = previous.dmenu.overrideAttrs (super: {
-    buildInputs = super.buildInputs ++ [ makeWrapper ];
+    buildInputs = super.buildInputs ++ [ final.makeWrapper ];
     patches = let
       fetchPatch = path:
         builtins.fetchurl "https://tools.suckless.org/dmenu/patches/${path}";
@@ -42,7 +42,15 @@ with final; {
       ./dmenu-tabright-20191228-acc1cee.diff
     ];
     postFixup = ''
-      wrapProgram $out/bin/dmenu_run --run "source ${./dmenu-flags.sh}"
+      geom=(1920 1080)
+      width=$((3 * geom[0] / 5))
+      height=40
+      xpos=$(((geom[0] - width) / 2))
+      ypos=$((5 * (geom[1] - height) / 12))
+
+      wrapProgram $out/bin/dmenu_run \
+        --add-flags "-x $xpos -y $ypos -w $width -h $height -dim 0.8"
     '';
   });
+
 }
